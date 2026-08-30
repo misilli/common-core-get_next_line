@@ -6,7 +6,7 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 17:09:29 by mumidill          #+#    #+#             */
-/*   Updated: 2026/08/30 17:09:29 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/08/30 17:43:50 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*final;
@@ -38,7 +39,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 int	main(void)
 {
 	char *a;
-    char *cevap;
+    char *cevap = NULL;
 
 
 	a = malloc(8);
@@ -48,7 +49,7 @@ int	main(void)
 		perror("Error opening file");
 		return (1);
 	}
-	while (!(strchr(a,'\n')))
+	while (!strchr(a,'\n'))
 	{
 		size_t len = read(fd, a, 6);
 		a[len] = '\0';
