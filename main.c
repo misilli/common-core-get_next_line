@@ -16,48 +16,73 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-
-char	*ft_strjoin(char const *s1, char const *s2)
+size_t	ft_strlen(const char *s)
 {
-	char	*final;
-	size_t	len1;
-	size_t	len2;
+	size_t	i;
 
-	if (!s1 || !s2)
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+char	*ft_get_line(char *readline)
+{
+	char	*returnstring;
+	char	*temp;
+	char    *start;
+
+	temp = readline;
+	
+	while (readline && *readline != '\n')
+		readline++;
+	returnstring = malloc((readline - temp) + 2);
+	if (!returnstring)
 		return (NULL);
-	len1 = strlen(s1);
-	len2 = strlen(s2);
-	final = malloc(sizeof(char) * (len1 + len2 + 1));
-	if (!final)
-		return (NULL);
-	memmove(final, s1, len1);
-	memmove(final + len1, s2, len2);
-	final[len1 + len2] = '\0';
-	return (final);
+	start = returnstring;
+	while (temp && *temp != '\n')
+		*returnstring++ = *temp++;
+	if (*temp == '\n')
+		*returnstring++ = *temp++;
+	*returnstring = '\0';
+	return (start);
+}
+
+char	*ft_get_temp(char *temp)
+{
+	char	*start;
+	char	*pfree;
+	char    *temp2;
+
+	start = temp;
+	pfree = temp;
+	while (temp && *temp != '\n')
+		temp++;
+	if (*temp == '\n')
+		temp++;
+	else
+	{
+		free(start);
+		return NULL;
+	}
+	start = malloc(ft_strlen(start) + 1);
+	temp2 = start;
+	if (!start)
+		return NULL;
+	while (*temp)
+		*start++ = *temp++;
+	*start = '\0';
+    free(pfree);
+	return (temp2);
 }
 
 int	main(void)
 {
-	char *a;
-    char *cevap = NULL;
-
-
-	a = malloc(8);
-	int fd = open("deneme.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		perror("Error opening file");
-		return (1);
-	}
-	while (!strchr(a,'\n'))
-	{
-		size_t len = read(fd, a, 6);
-		a[len] = '\0';
-		//printf("%s%c", a, *(a + 6) + '0');
-        
-        cevap = ft_strjoin(cevap , a);
-	}
-    printf("\n%s",cevap);
-	close(fd);
+	char a[100]= "Hello, World!\nThis is a test string";
+	char *pa = malloc(strlen(a) + 1);
+	pa = strdup(a);
+	
+	char *line;
+	line = ft_get_temp(pa);
+	printf("%s", line);
 	return (0);
 }

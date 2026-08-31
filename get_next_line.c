@@ -17,6 +17,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#define BUFFER_SIZE 10
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -79,27 +81,105 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*get_next_line(int fd)
-{
-	size_t	i;
-	char	*s1;
-	char	*rtrn;
-	char	*temp;
 
-	rtrn = malloc(1);
-	rtrn[0] = '\0';
-	s1 = malloc(6);
-	while (!(ft_strchr(s1, '\n')))
+char	*ft_strjoinfree(char *s1, char *s2)
+{
+	char	*final;
+
+	final = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!final)
+		return (NULL);
+	ft_memcpy(final, s1, ft_strlen(s1));
+	ft_memcpy(final + ft_strlen(s1), s2, ft_strlen(s2));
+	final[ft_strlen(s1) + ft_strlen(s2)] = '\0';
+	free(s1);
+	free(s2);
+	return (final);
+}
+char	*ft_get_line(char *readline)
+{
+	char	*returnstring;
+	char	*temp;
+	char	*start;
+
+	temp = readline;
+	while (readline && *readline != '\n')
+		readline++;
+	returnstring = malloc((readline - temp) + 2);
+	if (!returnstring)
+		return (NULL);
+	start = returnstring;
+	while (temp && *temp != '\n')
+		*returnstring++ = *temp++;
+	if (*temp == '\n')
+		*returnstring++ = *temp++;
+	*returnstring = '\0';
+	return (start);
+}
+
+char	*ft_get_temp(char *temp)
+{
+	char	*start;
+	char	*pfree;
+	char    *temp2;
+
+	start = temp;
+	pfree = temp;
+	while (temp && *temp != '\n')
+		temp++;
+	if (*temp == '\n')
+		temp++;
+	else
 	{
-		i = read(fd, s1, 5);
+		free(start);
+		return NULL;
+	}
+	start = malloc(ft_strlen(start) + 1);
+	temp2 = start;
+	if (!start)
+		return NULL;
+	while (*temp)
+		*start++ = *temp++;
+	*start = '\0';
+    free(pfree);
+	return (temp2);
+}
+
+char	*ft_read_line(int fd, char *temp)
+{
+	char	*buf;
+	char	*temp2;
+	int		i;
+
+	if (!temp)
+		temp = malloc(2);
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
+	while (!ft_strchr(temp, '\n'))
+	{
+		i = read(fd, buf, BUFFER_SIZE);
 		if (i <= 0)
 			break ;
-		s1[i] = '\0';
-		temp = rtrn;
-		rtrn = ft_strjoin(rtrn, s1);
-		free(temp);
+		buf[i] = '\0';
+		temp = ft_strjoinfree(temp, buf);
 	}
-	free(s1);
+	return (temp);
+}
+char	*get_next_line(int fd)
+{
+	static char	*temp;
+	char		*rtrn;
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		return (NULL);
+	}
+	temp = ft_read_line(fd, temp);
+	if (!temp)
+		return (NULL);
+	rtrn = ft_get_line(temp);
+	temp = ft_get_temp(temp);
 	return (rtrn);
 }
 
@@ -110,9 +190,11 @@ int	main(int argc, char **argv)
 
 	fd = open(argv[1], O_RDONLY);
 	string = get_next_line(fd);
+	printf("%s", string);
+	string = get_next_line(fd);
+
+	// printf("%s", string);
 
 	close(fd);
-
-	printf("%s", string);
 	free(string);
 }
