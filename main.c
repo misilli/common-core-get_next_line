@@ -29,10 +29,9 @@ char	*ft_get_line(char *readline)
 {
 	char	*returnstring;
 	char	*temp;
-	char    *start;
+	char	*start;
 
 	temp = readline;
-	
 	while (readline && *readline != '\n')
 		readline++;
 	returnstring = malloc((readline - temp) + 2);
@@ -44,6 +43,7 @@ char	*ft_get_line(char *readline)
 	if (*temp == '\n')
 		*returnstring++ = *temp++;
 	*returnstring = '\0';
+	free(temp - (returnstring - start));
 	return (start);
 }
 
@@ -78,11 +78,11 @@ char	*ft_get_temp(char *temp)
 int	main(void)
 {
 	char a[100]= "Hello, World!\nThis is a test string";
-	char *pa = malloc(strlen(a) + 1);
+	char *pa;
 	pa = strdup(a);
 	
 	char *line;
-	line = ft_get_temp(pa);
+	line = ft_get_line(pa);
 	printf("%s", line);
 	return (0);
 }
