@@ -78,50 +78,36 @@ char	*ft_strjoinfree(char *s1, char *s2)
 char	*ft_get_line(char *readline)
 {
 	char	*returnstring;
-	char	*temp;
-	char	*start;
 
-	temp = readline;
-	while (*readline && *readline != '\n')
-		readline++;
-	returnstring = malloc((readline - temp) + 2);
+	returnstring = malloc((ft_strchrnul(readline, '\n') - readline) + 2);
 	if (!returnstring)
 		return (NULL);
-	start = returnstring;
-	while (*temp && *temp != '\n')
-		*returnstring++ = *temp++;
-	if (*temp == '\n')
-		*returnstring++ = *temp++;
-	*returnstring = '\0';
-	return (start);
+	ft_strlcpy(returnstring, readline, ft_strchrnul(readline, '\n') - readline
+		+ 2);
+	return (returnstring);
 }
 
 char	*ft_get_temp(char *temp)
 {
 	char	*start;
-	char	*pfree;
-	char	*temp2;
+	char	*head;
 
-	start = temp;
-	pfree = temp;
-	while (*temp && *temp != '\n')
-		temp++;
+	head = temp;
+	temp = ft_strchrnul(temp, '\n');
 	if (*temp == '\n')
-		temp++;
-	else
 	{
-		free(start);
-		return (NULL);
+		start = malloc(ft_strlen(temp + 1) + 1);
+		if (!start)
+		{
+			free(head);
+			return (NULL);
+		}
+		ft_strlcpy(start, temp + 1, ft_strlen(temp +1) + 1);
+		free(head);
+		return (start);
 	}
-	start = malloc(ft_strlen(temp) + 1);
-	temp2 = start;
-	if (!start)
-		return (NULL);
-	while (*temp)
-		*start++ = *temp++;
-	*start = '\0';
-	free(pfree);
-	return (temp2);
+	free(head);
+	return (NULL);
 }
 
 char	*ft_read_line(int fd, char *temp)

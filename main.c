@@ -14,8 +14,9 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <unistd.h>
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -25,64 +26,81 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
+
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	j;
+
+	j = 0;
+	i = 0;
+	while (i + 1 < size && src[i] != 0)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	if (size != 0)
+	{
+		dest[i] = '\0';
+	}
+	while (src[j])
+	{
+		j++;
+	}
+	return (j);
+}
+char	*ft_strchrnul(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	return ((char *)s);
+}
 char	*ft_get_line(char *readline)
 {
 	char	*returnstring;
-	char	*temp;
-	char	*start;
 
-	temp = readline;
-	while (readline && *readline != '\n')
-		readline++;
-	returnstring = malloc((readline - temp) + 2);
+	returnstring = malloc((ft_strchrnul(readline, '\n') - readline) + 2);
 	if (!returnstring)
 		return (NULL);
-	start = returnstring;
-	while (temp && *temp != '\n')
-		*returnstring++ = *temp++;
-	if (*temp == '\n')
-		*returnstring++ = *temp++;
-	*returnstring = '\0';
-	free(temp - (returnstring - start));
-	return (start);
+	ft_strlcpy(returnstring, readline, ft_strchrnul(readline, '\n') - readline
+		+ 2);
+	return (returnstring);
 }
-
 char	*ft_get_temp(char *temp)
 {
 	char	*start;
-	char	*pfree;
-	char    *temp2;
+	char	*head;
 
-	start = temp;
-	pfree = temp;
-	while (temp && *temp != '\n')
-		temp++;
+	head = temp;
+	temp = ft_strchrnul(temp, '\n');
 	if (*temp == '\n')
-		temp++;
-	else
 	{
-		free(start);
-		return NULL;
+		start = malloc(ft_strlen(temp + 1) + 1);
+		if (!start)
+		{
+			free(head);
+			return (NULL);
+		}
+		ft_strlcpy(start, temp + 1, ft_strlen(temp +1) + 1);
+		free(head);
+		return (start);
 	}
-	start = malloc(ft_strlen(start) + 1);
-	temp2 = start;
-	if (!start)
-		return NULL;
-	while (*temp)
-		*start++ = *temp++;
-	*start = '\0';
-    free(pfree);
-	return (temp2);
+	free(head);
+	return (NULL);
 }
 
 int	main(void)
 {
-	char a[100]= "Hello, World!\nThis is a test string";
-	char *pa;
+	char	a[100] = "1\n2\0";
+	char	*pa;
+	char	*line;
+
 	pa = strdup(a);
-	
-	char *line;
-	line = ft_get_line(pa);
+	line = ft_get_temp(pa);
 	printf("%s", line);
 	return (0);
 }
