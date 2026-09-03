@@ -10,101 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include "get_next_line.h"
 
 #define BUFFER_SIZE 10
 
-size_t	ft_strlen(const char *s)
+char	*ft_get_rtrn(char *temp)
 {
-	size_t	i;
+	char	*rtrn;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	unsigned char		*pdest;
-	const unsigned char	*ps2;
-	size_t				i;
-
-	i = 0;
-	pdest = (unsigned char *)dest;
-	ps2 = (const unsigned char *)src;
-	while (i < n)
-	{
-		pdest[i] = ps2[i];
-		i++;
-	}
-	return (dest);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i++;
-	}
-	if ((char)c == '\0')
-		return ((char *)&s[i]);
-	return (NULL);
-}
-
-char	*ft_strjoinfree(char *s1, char *s2)
-{
-	char	*final;
-
-	final = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!final)
+	rtrn = malloc((ft_strchrnul(temp, '\n') - temp) + 2);
+	if (!rtrn)
 		return (NULL);
-	ft_memcpy(final, s1, ft_strlen(s1));
-	ft_memcpy(final + ft_strlen(s1), s2, ft_strlen(s2));
-	final[ft_strlen(s1) + ft_strlen(s2)] = '\0';
-	free(s1);
-	return (final);
-}
-char	*ft_get_line(char *readline)
-{
-	char	*returnstring;
-
-	returnstring = malloc((ft_strchrnul(readline, '\n') - readline) + 2);
-	if (!returnstring)
-		return (NULL);
-	ft_strlcpy(returnstring, readline, ft_strchrnul(readline, '\n') - readline
-		+ 2);
-	return (returnstring);
+	ft_strlcpy(rtrn, temp, (ft_strchrnul(temp, '\n') - temp) + 2);
+	return (rtrn);
 }
 
 char	*ft_get_temp(char *temp)
 {
-	char	*start;
+	char	*rtrn;
 	char	*head;
 
 	head = temp;
 	temp = ft_strchrnul(temp, '\n');
 	if (*temp == '\n')
 	{
-		start = malloc(ft_strlen(temp + 1) + 1);
-		if (!start)
+		rtrn = malloc(ft_strlen(temp + 1) + 1);
+		if (!rtrn)
 		{
 			free(head);
 			return (NULL);
 		}
-		ft_strlcpy(start, temp + 1, ft_strlen(temp +1) + 1);
+		ft_strlcpy(rtrn, temp + 1, ft_strlen(temp + 1) + 1);
 		free(head);
-		return (start);
+		return (rtrn);
 	}
 	free(head);
 	return (NULL);
@@ -133,57 +71,29 @@ char	*ft_read_line(int fd, char *temp)
 		buf[i] = '\0';
 		temp = ft_strjoinfree(temp, buf);
 		if (!temp)
-		{
-			free(buf);
 			return (NULL);
-		}
 	}
 	free(buf);
 	return (temp);
 }
+
 char	*get_next_line(int fd)
 {
 	static char	*temp;
 	char		*rtrn;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
 		return (NULL);
-	}
 	temp = ft_read_line(fd, temp);
 	if (!temp)
-	{
 		return (NULL);
-	}
 	if (*temp == '\0')
 	{
 		free(temp);
 		temp = NULL;
 		return (NULL);
 	}
-	rtrn = ft_get_line(temp);
+	rtrn = ft_get_rtrn(temp);
 	temp = ft_get_temp(temp);
 	return (rtrn);
-}
-
-int	main(int argc, char **argv)
-{
-	char *string;
-	int fd;
-	argc = argc;
-
-	fd = open(argv[1], O_RDONLY);
-	/*string = get_next_line(fd);
-	printf("%s", string);
-	free(string);*/
-
-	// GNL NULL dönene (yani dosyayı bitirene) kadar okur
-	while ((string = get_next_line(fd)) != NULL)
-	{
-		printf("%s", string);
-		free(string); // Her satırı yazdırdıktan sonra free et
-	}
-
-	close(fd);
-	return (0);
 }
