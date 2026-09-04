@@ -6,7 +6,7 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 17:09:29 by mumidill          #+#    #+#             */
-/*   Updated: 2026/08/30 17:43:50 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/09/04 19:02:01 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+/*size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
@@ -103,4 +104,18 @@ int	main(void)
 	line = ft_get_temp(pa);
 	printf("%s", line);
 	return (0);
+}*/
+int	main(int argc ,char **argv)
+{
+	int fd = open(argv[1],O_RDONLY);
+	char *string = get_next_line(fd);
+	argc =argc;
+	printf("%s",string);	
+	while (string != NULL)
+	{
+		printf("%s",string);
+		free(string);
+		string = get_next_line(fd);
+	}
+	return(0);
 }
