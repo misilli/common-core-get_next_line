@@ -18,11 +18,7 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-<<<<<<< HEAD
 int	main(int argc, char **argv)
-=======
-/*size_t	ft_strlen(const char *s)
->>>>>>> 2b4292be1b26d15e45ff92bc47620b7c3095b6b2
 {
 	argc = argc;
 	char	*line;
