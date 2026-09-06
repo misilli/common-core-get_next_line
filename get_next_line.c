@@ -6,12 +6,15 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 19:55:27 by mumidill          #+#    #+#             */
-/*   Updated: 2026/08/30 20:21:06 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/09/04 20:29:00 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2b4292be1b26d15e45ff92bc47620b7c3095b6b2
 #include <stdlib.h>
 #include <unistd.h>
 
