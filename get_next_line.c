@@ -12,9 +12,10 @@
 
 #include "get_next_line.h"
 
-#define BUFFER_SIZE 10
+#include <stdlib.h>
+#include <unistd.h>
 
-char	*ft_get_rtrn(char *temp)
+static char	*ft_get_rtrn(char *temp)
 {
 	char	*rtrn;
 
@@ -25,7 +26,7 @@ char	*ft_get_rtrn(char *temp)
 	return (rtrn);
 }
 
-char	*ft_get_temp(char *temp)
+static char	*ft_get_temp(char *temp)
 {
 	char	*rtrn;
 	char	*head;
@@ -48,7 +49,7 @@ char	*ft_get_temp(char *temp)
 	return (NULL);
 }
 
-char	*ft_read_line(int fd, char *temp)
+static char	*ft_read_line(int fd, char *temp)
 {
 	char	*buf;
 	int		i;
