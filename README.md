@@ -9,7 +9,7 @@
 Fonksiyon her çağrıldığında dosyadan `BUFFER_SIZE` kadar veri okur ve bir sonraki `\n` karakterine kadar olan kısmı döndürür. Kalan veri, çağrılar arasında konumun unutulmaması için **static bir değişkende** saklanır; böylece dosyanın tamamı art arda yapılan çağrılarla satır satır okunabilir.
 
 ## Talimatlar
-derlerken -D BUFFER_size flagını sisteminnizin gücüne göre ayarlabilirsiniz
+derlerken `-D BUFFER_SIZE` flagını sisteminnizin gücüne göre ayarlabilirsiniz
 
 Kullanmak için projenize `#include "get_next_line.h"` şeklinde kütüphaneyi eklemeniz gerekir.
 
