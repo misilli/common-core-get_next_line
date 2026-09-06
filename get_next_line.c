@@ -6,7 +6,7 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 19:55:27 by mumidill          #+#    #+#             */
-/*   Updated: 2026/09/06 16:25:20 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/09/06 16:53:25 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*get_next_line(int fd)
 	static char	*temp;
 	char		*rtrn;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	temp = ft_read_line(fd, temp);
 	if (!temp)
