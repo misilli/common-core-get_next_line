@@ -6,11 +6,10 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 16:54:12 by mumidill          #+#    #+#             */
-/*   Updated: 2026/09/02 16:54:12 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/09/06 16:08:16 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
 #include <stdlib.h>
 
 size_t	ft_strlen(const char *s)

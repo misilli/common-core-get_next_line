@@ -6,7 +6,7 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 17:09:29 by mumidill          #+#    #+#             */
-/*   Updated: 2026/09/04 19:02:01 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/09/06 16:11:52 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	argc = argc;
 	char	*line;

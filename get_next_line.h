@@ -6,7 +6,7 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 16:57:55 by mumidill          #+#    #+#             */
-/*   Updated: 2026/09/04 20:28:34 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/09/06 16:18:33 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@
 #  define BUFFER_SIZE 42
 # endif
 # include <stddef.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
 
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);

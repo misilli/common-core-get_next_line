@@ -6,7 +6,7 @@
 /*   By: mumidill <mumidill@student.42istanbul.com. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/30 19:55:27 by mumidill          #+#    #+#             */
-/*   Updated: 2026/09/04 20:29:00 by mumidill         ###   ########.fr       */
+/*   Updated: 2026/09/06 16:25:20 by mumidill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static char	*ft_get_rtrn(char *temp)
+char	*ft_get_rtrn(char *temp)
 {
 	char	*rtrn;
 
@@ -25,7 +25,7 @@ static char	*ft_get_rtrn(char *temp)
 	return (rtrn);
 }
 
-static char	*ft_get_temp(char *temp)
+char	*ft_get_temp(char *temp)
 {
 	char	*rtrn;
 	char	*head;
@@ -48,7 +48,7 @@ static char	*ft_get_temp(char *temp)
 	return (NULL);
 }
 
-static char	*ft_read_line(int fd, char *temp)
+char	*ft_read_line(int fd, char *temp)
 {
 	char	*buf;
 	int		i;
